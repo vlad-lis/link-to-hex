@@ -1,0 +1,19 @@
+.nav {
+  display: flex;
+  gap: 20px;
+
+  &__link {
+    text-decoration: none;
+    color: #000;
+    font-size: 18px;
+
+    &_active {
+      text-decoration: underline;
+      text-underline-offset: 5px;
+    }
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
