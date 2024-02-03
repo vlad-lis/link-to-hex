@@ -6,9 +6,9 @@ import {
   useState,
 } from 'react';
 import styles from './AuthForm.module.scss';
-import { signUp, signIn } from '../../utils/authApi';
+import { signUp, signIn, TAuthResult } from '../../utils/authApi';
 
-type TAuthForm = {
+type TAuthFormProps = {
   isSignUpPage: boolean;
 };
 
@@ -17,7 +17,7 @@ type TFormData = {
   password: string;
 };
 
-const AuthForm = ({ isSignUpPage }: TAuthForm): ReactElement => {
+const AuthForm = ({ isSignUpPage }: TAuthFormProps): ReactElement => {
   const [formData, setFormData] = useState<TFormData>({
     username: '',
     password: '',
@@ -26,6 +26,9 @@ const AuthForm = ({ isSignUpPage }: TAuthForm): ReactElement => {
   const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
   const passwordBtnClass = `${styles['form__password-btn']}
     ${isPasswordShown ? styles['form__password-btn_hide'] : ''}`;
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(true);
+  const submitBtnClass = `${styles['form__submit-btn']}
+    ${isSubmitDisabled ? styles['form__submit-btn_disabled'] : ''}`;
 
   // clear form on route change
   useEffect(() => {
@@ -33,51 +36,55 @@ const AuthForm = ({ isSignUpPage }: TAuthForm): ReactElement => {
     setErrorMessage('');
   }, [isSignUpPage]);
 
+  // update submit button state on input
+  useEffect(() => {
+    setIsSubmitDisabled(
+      !(formData.username.length > 0 && formData.password.length > 0)
+    );
+  }, [formData]);
+
   // save inputs to form state
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setErrorMessage('');
+  };
+
+  // submit form
+  const handleFormSubmit = async (
+    e: FormEvent<HTMLFormElement>,
+    action: (username: string, password: string) => Promise<TAuthResult>
+  ): Promise<void> => {
+    e.preventDefault();
+    setIsSubmitDisabled(true);
+    const { username, password } = formData;
+
+    const result = await action(username, password);
+
+    if (result.success) {
+      console.log(result);
+    } else if (result.statusCode === 400) {
+      setErrorMessage(
+        action === signIn ? 'Incorrect password' : 'User already exists'
+      );
+    } else if (result.statusCode) {
+      setErrorMessage(`Error ${result.statusCode}`);
+    } else {
+      setErrorMessage('Unknown error');
+    }
+
+    setIsSubmitDisabled(false);
   };
 
   // submit signup form
   const handleSignUpSubmit = async (
     e: FormEvent<HTMLFormElement>
-  ): Promise<void> => {
-    e.preventDefault();
-    const { username, password } = formData;
-
-    const result = await signUp(username, password);
-
-    if (result.success) {
-      console.log(result);
-    } else if (result.statusCode === 400) {
-      setErrorMessage('User already exists');
-    } else if (result.statusCode) {
-      setErrorMessage(`Error ${result.statusCode}`);
-    } else {
-      setErrorMessage('Uknown error');
-    }
-  };
+  ): Promise<void> => handleFormSubmit(e, signUp);
 
   // submit signin form
   const handleSignInSubmit = async (
     e: FormEvent<HTMLFormElement>
-  ): Promise<void> => {
-    e.preventDefault();
-    const { username, password } = formData;
-
-    const result = await signIn(username, password);
-
-    if (result.success) {
-      console.log(result);
-    } else if (result.statusCode === 400) {
-      setErrorMessage('User already exists');
-    } else if (result.statusCode) {
-      setErrorMessage(`Error ${result.statusCode}`);
-    } else {
-      setErrorMessage('Uknown error');
-    }
-  };
+  ): Promise<void> => handleFormSubmit(e, signIn);
 
   // toggle password visiblity
   const handleShowPassword = (): void => {
@@ -125,7 +132,11 @@ const AuthForm = ({ isSignUpPage }: TAuthForm): ReactElement => {
       </fieldset>
 
       <p className={styles.form__error}>{errorMessage}</p>
-      <button className={styles['form__submit-btn']} type='submit'>
+      <button
+        className={submitBtnClass}
+        type='submit'
+        disabled={isSubmitDisabled}
+      >
         {isSignUpPage ? 'Register' : 'Log in'}
       </button>
     </form>

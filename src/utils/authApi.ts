@@ -5,7 +5,7 @@ import {
   BASIC_AUTH_PASSWORD,
 } from './constants';
 
-type TResult = {
+export type TAuthResult = {
   success: boolean;
   statusCode?: number;
   token?: string;
@@ -13,10 +13,11 @@ type TResult = {
 
 const authHeader: string = `Basic ${btoa(`${BASIC_AUTH_USERNAME}:${BASIC_AUTH_PASSWORD}`)}`;
 
+// register
 export const signUp = async (
   username: string,
   password: string
-): Promise<TResult> => {
+): Promise<TAuthResult> => {
   try {
     const response = await axios.post(`${BASE_URL}/register`, null, {
       headers: {
@@ -39,27 +40,29 @@ export const signUp = async (
   }
 };
 
+// log in
 export const signIn = async (
   username: string,
   password: string
-): Promise<TResult> => {
+): Promise<TAuthResult> => {
   try {
-    const response = await axios.post(`${BASE_URL}/login`, null, {
-      headers: {
-        Authorization: authHeader,
-      },
-      params: {
-        username,
-        password,
-      },
-    });
+    const response = await axios.post(
+      `${BASE_URL}/login`,
+      { username, password },
+      {
+        headers: {
+          Authorization: authHeader,
+        },
+      }
+    );
 
-    console.log(response);
-
-    return { success: true, statusCode: response.status, token: '' };
+    return {
+      success: true,
+      statusCode: response.status,
+      token: response.data.access_token,
+    };
   } catch (err: unknown) {
     if (err instanceof AxiosError) {
-      console.log(err);
       return { success: false, statusCode: err.response?.status };
     }
 
