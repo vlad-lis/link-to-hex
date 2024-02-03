@@ -1,19 +1,37 @@
-import { ChangeEvent, FormEvent, ReactElement, useState } from 'react';
+import {
+  ChangeEvent,
+  FormEvent,
+  ReactElement,
+  useEffect,
+  useState,
+} from 'react';
 import styles from './AuthForm.module.scss';
+import { signUp, signIn } from '../../utils/authApi';
+
+type TAuthForm = {
+  isSignUpPage: boolean;
+};
 
 type TFormData = {
   username: string;
   password: string;
 };
 
-const AuthForm = (): ReactElement => {
+const AuthForm = ({ isSignUpPage }: TAuthForm): ReactElement => {
   const [formData, setFormData] = useState<TFormData>({
     username: '',
     password: '',
   });
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
   const passwordBtnClass = `${styles['form__password-btn']}
     ${isPasswordShown ? styles['form__password-btn_hide'] : ''}`;
+
+  // clear form on route change
+  useEffect(() => {
+    setFormData({ username: '', password: '' });
+    setErrorMessage('');
+  }, [isSignUpPage]);
 
   // save inputs to form state
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -21,12 +39,44 @@ const AuthForm = (): ReactElement => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // submit form
-  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+  // submit signup form
+  const handleSignUpSubmit = async (
+    e: FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
     const { username, password } = formData;
 
-    console.log(username, password);
+    const result = await signUp(username, password);
+
+    if (result.success) {
+      console.log(result);
+    } else if (result.statusCode === 400) {
+      setErrorMessage('User already exists');
+    } else if (result.statusCode) {
+      setErrorMessage(`Error ${result.statusCode}`);
+    } else {
+      setErrorMessage('Uknown error');
+    }
+  };
+
+  // submit signin form
+  const handleSignInSubmit = async (
+    e: FormEvent<HTMLFormElement>
+  ): Promise<void> => {
+    e.preventDefault();
+    const { username, password } = formData;
+
+    const result = await signIn(username, password);
+
+    if (result.success) {
+      console.log(result);
+    } else if (result.statusCode === 400) {
+      setErrorMessage('User already exists');
+    } else if (result.statusCode) {
+      setErrorMessage(`Error ${result.statusCode}`);
+    } else {
+      setErrorMessage('Uknown error');
+    }
   };
 
   // toggle password visiblity
@@ -35,7 +85,10 @@ const AuthForm = (): ReactElement => {
   };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form
+      className={styles.form}
+      onSubmit={isSignUpPage ? handleSignUpSubmit : handleSignInSubmit}
+    >
       <fieldset className={styles.form__fieldset}>
         <label htmlFor='username'>Name</label>
         <input
@@ -71,8 +124,9 @@ const AuthForm = (): ReactElement => {
         </div>
       </fieldset>
 
+      <p className={styles.form__error}>{errorMessage}</p>
       <button className={styles['form__submit-btn']} type='submit'>
-        Submit
+        {isSignUpPage ? 'Register' : 'Log in'}
       </button>
     </form>
   );

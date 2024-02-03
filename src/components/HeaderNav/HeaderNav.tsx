@@ -10,10 +10,10 @@ const HeaderNav = (): ReactElement => {
 
   return (
     <nav className={styles.nav}>
-      <NavLink className={linkClass} to='/'>
+      <NavLink className={linkClass} to='/signup'>
         Sign up
       </NavLink>
-      <NavLink className={linkClass} to='/'>
+      <NavLink className={linkClass} to='/signin'>
         Sign in
       </NavLink>
     </nav>
