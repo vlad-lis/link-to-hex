@@ -1,0 +1,35 @@
+.auth {
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+
+  &__greeting {
+    margin: 0;
+    font-size: 22px;
+  }
+
+  &__redirect {
+    display: flex;
+    gap: 7px;
+  }
+
+  &__redirect-text {
+    margin: 0;
+    font-size: 18px;
+  }
+
+  &__redirect-link {
+    font-size: 18px;
+    color: #374882;
+    text-decoration: none;
+
+    &:hover {
+      opacity: 0.8;
+      text-decoration: underline;
+      text-underline-offset: 5px;
+    }
+  }
+}
