@@ -10,7 +10,7 @@ type TAuthPageProps = {
 
 const AuthPage = ({ isSignUpPage }: TAuthPageProps): ReactElement => {
   return (
-    <div>
+    <>
       <Header />
       <main className={styles.auth}>
         <h3 className={styles.auth__greeting}>
@@ -29,7 +29,7 @@ const AuthPage = ({ isSignUpPage }: TAuthPageProps): ReactElement => {
           </NavLink>
         </div>
       </main>
-    </div>
+    </>
   );
 };
 

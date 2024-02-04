@@ -5,6 +5,7 @@ import {
   useEffect,
   useState,
 } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './AuthForm.module.scss';
 import { signUp, signIn, TAuthResult } from '../../utils/authApi';
 
@@ -29,6 +30,7 @@ const AuthForm = ({ isSignUpPage }: TAuthFormProps): ReactElement => {
   const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(true);
   const submitBtnClass = `${styles['form__submit-btn']}
     ${isSubmitDisabled ? styles['form__submit-btn_disabled'] : ''}`;
+  const navigate = useNavigate();
 
   // clear form on route change
   useEffect(() => {
@@ -50,7 +52,7 @@ const AuthForm = ({ isSignUpPage }: TAuthFormProps): ReactElement => {
     setErrorMessage('');
   };
 
-  // submit form
+  // submit form general func
   const handleFormSubmit = async (
     e: FormEvent<HTMLFormElement>,
     action: (username: string, password: string) => Promise<TAuthResult>
@@ -62,7 +64,18 @@ const AuthForm = ({ isSignUpPage }: TAuthFormProps): ReactElement => {
     const result = await action(username, password);
 
     if (result.success) {
-      console.log(result);
+      if (action === signIn && result.token) {
+        sessionStorage.setItem('token', result.token);
+        navigate('/squeeze', { replace: true });
+      } else if (action === signUp) {
+        // sign in after successful registration
+        const signInRes = await signIn(username, password);
+        if (signInRes.success && signInRes.token) {
+          sessionStorage.setItem('token', signInRes.token);
+          navigate('/squeeze', { replace: true });
+        }
+      }
+      // handle errors
     } else if (result.statusCode === 400) {
       setErrorMessage(
         action === signIn ? 'Incorrect password' : 'User already exists'
