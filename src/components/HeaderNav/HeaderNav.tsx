@@ -25,7 +25,7 @@ const HeaderNav = (): ReactElement => {
     return (
       <nav className={styles.nav}>
         <NavLink className={linkClass} to='/squeeze'>
-          Squeeze
+          Squeeze Link
         </NavLink>
         <NavLink className={linkClass} to='/'>
           Statistics
@@ -35,7 +35,7 @@ const HeaderNav = (): ReactElement => {
           type='button'
           onClick={handleLogout}
         >
-          Logout
+          Log out
         </button>
       </nav>
     );

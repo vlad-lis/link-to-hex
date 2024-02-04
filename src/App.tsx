@@ -5,6 +5,7 @@ import SqueezePage from './pages/SqueezePage/SqueezePage';
 import store from './store/store';
 
 function App() {
+  // TODO: Protected routes
   return (
     <BrowserRouter>
       <Provider store={store}>

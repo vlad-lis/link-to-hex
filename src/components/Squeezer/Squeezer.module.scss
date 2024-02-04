@@ -1,0 +1,80 @@
+.squeezer {
+  margin-top: 40px;
+  width: 100%;
+  max-width: 600px;
+
+  &__fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__prompt {
+    font-size: 18px;
+  }
+
+  &__input-wrapper {
+    display: flex;
+    margin-top: 10px;
+  }
+
+  &__input {
+    flex: 1;
+    height: 40px;
+    font-size: 20px;
+    padding: 0;
+    border: 2px solid #000;
+    outline: none;
+    text-indent: 15px;
+    border-radius: 7px 0 0 7px;
+  }
+
+  &__btn {
+    width: 110px;
+    font-size: 20px;
+    padding: 0;
+    border-radius: 0 7px 7px 0;
+    border: 2px solid #000;
+    border-left: none;
+    background-color: #e9eef1;
+    transition: all 0.2s ease;
+
+    &_disabled {
+      background-color: #e8e5e5;
+      border-color: #a2a2a2;
+    }
+
+    &:hover {
+      cursor: pointer;
+      opacity: 0.7;
+    }
+  }
+
+  &__result {
+    margin: 20px 0 0 0;
+    min-height: 55px;
+    text-align: center;
+  }
+
+  &__error {
+    margin: 0;
+    font-size: 18px;
+    color: #bc2c2c;
+  }
+
+  &__link {
+    margin: 0 0 7px 0;
+    font-size: 20px;
+
+    &_redirect {
+      color: #374882;
+      text-decoration: none;
+
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+        text-underline-offset: 5px;
+      }
+    }
+  }
+}

@@ -62,8 +62,8 @@ const AuthForm = ({ isSignUpPage }: TAuthFormProps): ReactElement => {
   ): Promise<void> => {
     e.preventDefault();
     setIsSubmitDisabled(true);
-    const { username, password } = formData;
 
+    const { username, password } = formData;
     const result = await action(username, password);
 
     if (result.success) {
