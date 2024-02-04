@@ -6,8 +6,10 @@ import {
   useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import styles from './AuthForm.module.scss';
 import { signUp, signIn, TAuthResult } from '../../utils/authApi';
+import { setIsLoggedIn } from '../../store/authSlice';
 
 type TAuthFormProps = {
   isSignUpPage: boolean;
@@ -19,6 +21,7 @@ type TFormData = {
 };
 
 const AuthForm = ({ isSignUpPage }: TAuthFormProps): ReactElement => {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState<TFormData>({
     username: '',
     password: '',
@@ -66,12 +69,14 @@ const AuthForm = ({ isSignUpPage }: TAuthFormProps): ReactElement => {
     if (result.success) {
       if (action === signIn && result.token) {
         sessionStorage.setItem('token', result.token);
+        dispatch(setIsLoggedIn(true));
         navigate('/squeeze', { replace: true });
       } else if (action === signUp) {
         // sign in after successful registration
         const signInRes = await signIn(username, password);
         if (signInRes.success && signInRes.token) {
           sessionStorage.setItem('token', signInRes.token);
+          dispatch(setIsLoggedIn(true));
           navigate('/squeeze', { replace: true });
         }
       }

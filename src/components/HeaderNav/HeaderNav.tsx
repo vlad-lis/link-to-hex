@@ -1,12 +1,45 @@
 import { ReactElement } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './HeaderNav.module.scss';
+import { RootState } from '../../store/store';
+import { setIsLoggedIn } from '../../store/authSlice';
 
 const HeaderNav = (): ReactElement => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+
   const linkClass = ({ isActive }: { isActive: boolean }): string =>
     isActive
       ? `${styles.nav__link} ${styles.nav__link_active}`
       : `${styles.nav__link}`;
+
+  const handleLogout = (): void => {
+    sessionStorage.removeItem('token');
+    dispatch(setIsLoggedIn(false));
+    navigate('/signin', { replace: true });
+  };
+
+  if (isLoggedIn) {
+    return (
+      <nav className={styles.nav}>
+        <NavLink className={linkClass} to='/squeeze'>
+          Squeeze
+        </NavLink>
+        <NavLink className={linkClass} to='/'>
+          Statistics
+        </NavLink>
+        <button
+          className={styles.nav__logout}
+          type='button'
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+      </nav>
+    );
+  }
 
   return (
     <nav className={styles.nav}>

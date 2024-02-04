@@ -16,4 +16,18 @@
       opacity: 0.7;
     }
   }
+
+  &__logout {
+    width: 70px;
+    padding: 0;
+    border: none;
+    background-color: #e8e5e5;
+    border-radius: 7px;
+    font-size: 18px;
+
+    &:hover {
+      cursor: pointer;
+      opacity: 0.7;
+    }
+  }
 }
