@@ -15,8 +15,9 @@ const Squeezer = (): ReactElement => {
   });
   const submitBtnClass = `${styles.squeezer__btn}
     ${isSubmitDisabled ? styles.squeezer__btn_disabled : ''}`;
-  // const resultClass = `${styles.squeezer__result} ${errorMessage ? styles.squeezer__result_error : ''}`;
   const [squeezedLink, setSqueezedLink] = useState<string>('');
+  const [isCopySuccess, setIsCopySuccess] = useState<boolean>(false);
+  const copyBtnClass = `${styles.squeezer__copy} ${isCopySuccess ? styles.squeezer__copy_success : ''}`;
 
   // save input
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -25,6 +26,7 @@ const Squeezer = (): ReactElement => {
     setErrorMessage('');
     setSqueezedLink('');
     setIsSubmitDisabled(false);
+    setIsCopySuccess(false);
   };
 
   // submit form
@@ -49,6 +51,22 @@ const Squeezer = (): ReactElement => {
       setErrorMessage(`Error ${result.statusCode}`);
     } else {
       setErrorMessage('Unknown error');
+    }
+  };
+
+  // copy squeezed link
+  const copyToClipboard = async (text: string): Promise<void> => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setIsCopySuccess(true);
+    } catch (err) {
+      console.error('Unable to copy to clipboard', err);
+    }
+  };
+
+  const handleCopyBtnClick = (): void => {
+    if (squeezedLink) {
+      copyToClipboard(`https://front-test.hex.team/s/${squeezedLink}`);
     }
   };
 
@@ -84,14 +102,22 @@ const Squeezer = (): ReactElement => {
         {squeezedLink && (
           <>
             <p className={styles.squeezer__link}>Your squeezed link is: </p>
-            <a
-              className={`${styles.squeezer__link} ${styles.squeezer__link_redirect}`}
-              href={`https://front-test.hex.team/s/${squeezedLink}`}
-              target='_blank'
-              rel='noreferrer'
-            >
-              https://front-test.hex.team/s/{squeezedLink}
-            </a>
+            <div className={styles['squeezer__redirect-wrapper']}>
+              <a
+                className={`${styles.squeezer__link} ${styles.squeezer__link_redirect}`}
+                href={`https://front-test.hex.team/s/${squeezedLink}`}
+                target='_blank'
+                rel='noreferrer'
+              >
+                https://front-test.hex.team/s/{squeezedLink}
+              </a>
+              <button
+                className={copyBtnClass}
+                type='button'
+                aria-label='copy'
+                onClick={handleCopyBtnClick}
+              />
+            </div>
           </>
         )}
       </div>

@@ -69,12 +69,39 @@
     &_redirect {
       color: #374882;
       text-decoration: none;
+      margin: 0;
 
       &:hover {
         cursor: pointer;
         text-decoration: underline;
         text-underline-offset: 5px;
       }
+    }
+  }
+
+  &__redirect-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  &__copy {
+    background-image: url('../../../public/images/copy.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    height: 20px;
+    width: 20px;
+
+    &_success {
+      background-image: url('../../../public/images/copy_success.svg');
+    }
+
+    &:hover {
+      cursor: pointer;
     }
   }
 }
