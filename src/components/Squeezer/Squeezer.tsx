@@ -1,12 +1,16 @@
 import { ReactElement, useState, ChangeEvent, FormEvent } from 'react';
+import { useDispatch } from 'react-redux';
 import styles from './Squeezer.module.scss';
 import { squeezeLink } from '../../utils/mainApi';
+import { addSqueezedLink } from '../../store/squeezedLinksSlice';
+import copyToClipboard from '../../utils/helpers';
 
 type TFormData = {
   link: string;
 };
 
 const Squeezer = (): ReactElement => {
+  const dispatch = useDispatch();
   const linkRegex: RegExp = /^(https?:\/\/)/;
   const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -45,6 +49,14 @@ const Squeezer = (): ReactElement => {
 
     if (result.success && result.short) {
       setSqueezedLink(result.short);
+
+      // add result to current session links
+      dispatch(
+        addSqueezedLink({
+          target: link,
+          short: result.short,
+        })
+      );
     } else if (result.statusCode === 400 || result.statusCode === 422) {
       setErrorMessage('Please input a valid link');
     } else if (result.statusCode) {
@@ -55,18 +67,10 @@ const Squeezer = (): ReactElement => {
   };
 
   // copy squeezed link
-  const copyToClipboard = async (text: string): Promise<void> => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setIsCopySuccess(true);
-    } catch (err) {
-      console.error('Unable to copy to clipboard', err);
-    }
-  };
-
-  const handleCopyBtnClick = (): void => {
+  const handleCopyBtnClick = async (): Promise<void> => {
     if (squeezedLink) {
-      copyToClipboard(`https://front-test.hex.team/s/${squeezedLink}`);
+      await copyToClipboard(`https://front-test.hex.team/s/${squeezedLink}`);
+      setIsCopySuccess(true);
     }
   };
 

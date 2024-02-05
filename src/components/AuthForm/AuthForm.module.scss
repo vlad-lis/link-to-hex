@@ -74,13 +74,17 @@
     background-color: #e0e7eb;
     transition: all 0.2s ease;
 
+    &:hover {
+      cursor: pointer;
+    }
+
     &_disabled {
       background-color: #e8e5e5;
       border-color: #a2a2a2;
-    }
 
-    &:hover {
-      cursor: pointer;
+      &:hover {
+        cursor: auto;
+      }
     }
   }
 }

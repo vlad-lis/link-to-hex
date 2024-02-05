@@ -22,7 +22,7 @@
     flex: 1;
     height: 40px;
     font-size: 20px;
-    padding: 0;
+    padding: 0 19px 0 0;
     border: 2px solid #000;
     outline: none;
     text-indent: 15px;
@@ -39,14 +39,19 @@
     background-color: #e9eef1;
     transition: all 0.2s ease;
 
-    &_disabled {
-      background-color: #e8e5e5;
-      border-color: #a2a2a2;
-    }
-
     &:hover {
       cursor: pointer;
       opacity: 0.7;
+    }
+
+    &_disabled {
+      background-color: #e8e5e5;
+      border-color: #a2a2a2;
+
+      &:hover {
+        opacity: 1;
+        cursor: auto;
+      }
     }
   }
 
