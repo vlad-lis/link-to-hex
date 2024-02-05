@@ -15,7 +15,6 @@ type TFormInput = {
 };
 
 const StatsFilterForm = (): ReactElement => {
-  console.log('rendered');
   const { register, handleSubmit } = useForm<TFormInput>();
   const onSubmit: SubmitHandler<TFormInput> = (data) => console.log(data);
 

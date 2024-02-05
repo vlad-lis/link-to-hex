@@ -1,21 +1,26 @@
-import { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { TStatsObject, getStats } from '../../utils/mainApi';
 import Loader from '../Loader/Loader';
 import styles from './StatsTable.module.scss';
 import copyToClipboard from '../../utils/helpers';
 import StatsFilterForm from '../StatsFilterForm/StatsFilterForm';
+import { RootState } from '../../store/store';
 
 const StatsTable = (): ReactElement => {
+  const filters = useSelector((state: RootState) => state.filters.filters);
   const [apiData, setApiData] = useState<TStatsObject[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [linksTotal, setLinksTotal] = useState<number | undefined>(0);
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState<boolean>(false);
   const statsFiltersClass = `${styles.stats__filters} ${isFilterPanelOpen ? styles.stats__filters_expanded : ''}`;
 
-  useEffect(() => {
-    const getApiStats = async (): Promise<void> => {
+  // api request
+  const getApiStats = useCallback(
+    async (offset: string, limit: string): Promise<void> => {
+      setIsLoading(true);
       try {
-        const result = await getStats();
+        const result = await getStats(offset, limit, filters);
 
         if (result.success && result.data) {
           setApiData(result.data);
@@ -29,17 +34,21 @@ const StatsTable = (): ReactElement => {
         setIsFilterPanelOpen(false);
         setIsLoading(false);
       }
-    };
+    },
+    [filters]
+  );
 
-    getApiStats();
-  }, []);
+  // load initial data
+  useEffect(() => {
+    getApiStats('0', '10');
+  }, [getApiStats]);
 
-  // copy original
+  // copy original link
   const handleCopyOriginal = async (link: string): Promise<void> => {
     await copyToClipboard(link);
   };
 
-  // copy hexed
+  // copy hexed link
   const handleCopyHexed = async (link: string): Promise<void> => {
     await copyToClipboard(`https://front-test.hex.team/s/${link}`);
   };
@@ -47,6 +56,11 @@ const StatsTable = (): ReactElement => {
   // toggle filter panel
   const handleFilterPanelToggle = (): void => {
     setIsFilterPanelOpen(!isFilterPanelOpen);
+  };
+
+  // refresh click
+  const handleRefreshClick = (): void => {
+    getApiStats('0', '10');
   };
 
   return (
@@ -69,6 +83,7 @@ const StatsTable = (): ReactElement => {
                 className={`${styles.stats__btn} ${styles.stats__btn_refresh}`}
                 type='button'
                 aria-label='refresh'
+                onClick={handleRefreshClick}
               />
             </div>
           </div>

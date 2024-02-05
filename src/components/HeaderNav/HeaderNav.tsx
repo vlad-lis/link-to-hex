@@ -5,6 +5,7 @@ import styles from './HeaderNav.module.scss';
 import { RootState } from '../../store/store';
 import { setIsLoggedIn } from '../../store/authSlice';
 import { clearSqueezedLinks } from '../../store/squeezedLinksSlice';
+import { clearFilters } from '../../store/filtersSlice';
 
 const HeaderNav = (): ReactElement => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const HeaderNav = (): ReactElement => {
     sessionStorage.removeItem('token');
     dispatch(setIsLoggedIn(false));
     dispatch(clearSqueezedLinks());
+    dispatch(clearFilters());
     navigate('/signin', { replace: true });
   };
 

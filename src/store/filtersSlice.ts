@@ -4,8 +4,10 @@ type TFiltersState = {
   filters: string[];
 };
 
+const storedFilters = JSON.parse(sessionStorage.getItem('filters') || '[]');
+const defaultFilters = ['desc_counter'];
 const initialState: TFiltersState = {
-  filters: JSON.parse(sessionStorage.getItem('filters') || '[]'),
+  filters: storedFilters.length > 0 ? storedFilters : defaultFilters,
 };
 
 const filtersSlice = createSlice({
