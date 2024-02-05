@@ -3,6 +3,7 @@ import { TStatsObject, getStats } from '../../utils/mainApi';
 import Loader from '../Loader/Loader';
 import styles from './StatsTable.module.scss';
 import copyToClipboard from '../../utils/helpers';
+import StatsFilterForm from '../StatsFilterForm/StatsFilterForm';
 
 const StatsTable = (): ReactElement => {
   const [apiData, setApiData] = useState<TStatsObject[]>([]);
@@ -62,6 +63,7 @@ const StatsTable = (): ReactElement => {
               />
             </div>
           </div>
+          <StatsFilterForm />
           <table className={styles.stats__table}>
             <thead>
               <tr>
