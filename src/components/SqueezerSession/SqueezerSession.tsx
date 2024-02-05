@@ -30,9 +30,7 @@ const SqueezerSession = (): ReactElement => {
     <section className={styles.session}>
       <h3 className={styles.session__title}>Current session:</h3>
       <div className={styles.session__subtitle}>
-        <p className={styles.session__tip}>
-          (click a cell to copy link to clipboard)
-        </p>
+        <p className={styles.session__tip}>(click a cell to copy a link)</p>
         <button
           className={styles.session__clear}
           type='button'

@@ -7,6 +7,20 @@ type TSqueezeResult = {
   statusCode?: number;
 };
 
+export type TStatsObject = {
+  id: number;
+  short: string;
+  target: string;
+  counter: number;
+};
+
+type TStatsResult = {
+  success: boolean;
+  total?: number;
+  data?: TStatsObject[];
+  statusCode?: number;
+};
+
 // squeeze link
 export const squeezeLink = async (link: string): Promise<TSqueezeResult> => {
   try {
@@ -31,4 +45,32 @@ export const squeezeLink = async (link: string): Promise<TSqueezeResult> => {
   }
 };
 
-export const getStats = 'placeholder';
+// get stats
+export const getStats = async (
+  offset: string = '0',
+  limit: string = '10',
+  order?: string
+): Promise<TStatsResult> => {
+  try {
+    const token = sessionStorage.getItem('token');
+    const response = await axios.get(`${BASE_URL}/statistics`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: { offset, limit, order },
+    });
+
+    return {
+      success: true,
+      total: +response.headers['x-total-count'],
+      data: response.data,
+    };
+  } catch (err: unknown) {
+    if (err instanceof AxiosError) {
+      return { success: false, statusCode: err.response?.status };
+    }
+
+    console.error('An unknown error occurred: ', err);
+    return { success: false, statusCode: undefined };
+  }
+};
