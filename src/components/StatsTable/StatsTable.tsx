@@ -9,6 +9,8 @@ const StatsTable = (): ReactElement => {
   const [apiData, setApiData] = useState<TStatsObject[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [linksTotal, setLinksTotal] = useState<number | undefined>(0);
+  const [isFilterPanelOpen, setIsFilterPanelOpen] = useState<boolean>(false);
+  const statsFiltersClass = `${styles.stats__filters} ${isFilterPanelOpen ? styles.stats__filters_expanded : ''}`;
 
   useEffect(() => {
     const getApiStats = async (): Promise<void> => {
@@ -24,6 +26,7 @@ const StatsTable = (): ReactElement => {
           console.log('Unknown error occurred');
         }
       } finally {
+        setIsFilterPanelOpen(false);
         setIsLoading(false);
       }
     };
@@ -31,14 +34,19 @@ const StatsTable = (): ReactElement => {
     getApiStats();
   }, []);
 
-  // handle copy original
+  // copy original
   const handleCopyOriginal = async (link: string): Promise<void> => {
     await copyToClipboard(link);
   };
 
-  // handle copy hexed
+  // copy hexed
   const handleCopyHexed = async (link: string): Promise<void> => {
     await copyToClipboard(`https://front-test.hex.team/s/${link}`);
+  };
+
+  // toggle filter panel
+  const handleFilterPanelToggle = (): void => {
+    setIsFilterPanelOpen(!isFilterPanelOpen);
   };
 
   return (
@@ -55,6 +63,7 @@ const StatsTable = (): ReactElement => {
                 className={`${styles.stats__btn} ${styles.stats__btn_filter}`}
                 type='button'
                 aria-label='filters'
+                onClick={handleFilterPanelToggle}
               />
               <button
                 className={`${styles.stats__btn} ${styles.stats__btn_refresh}`}
@@ -63,7 +72,9 @@ const StatsTable = (): ReactElement => {
               />
             </div>
           </div>
-          <StatsFilterForm />
+          <div className={statsFiltersClass}>
+            <StatsFilterForm />
+          </div>
           <table className={styles.stats__table}>
             <thead>
               <tr>
