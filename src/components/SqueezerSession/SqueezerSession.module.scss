@@ -47,27 +47,40 @@
 
   &__row {
     &:hover {
-      background-color: #0000001a;
+      background-color: #9796961a;
     }
   }
 
   &__cell {
     padding: 5px 10px;
-    min-width: 96px;
     max-width: 426px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     border: 1px solid #0000001a;
+    box-sizing: border-box;
+    table-layout: fixed;
 
     &_id {
-      min-width: 10px;
+      width: 50px;
       text-align: center;
     }
 
-    &_link {
+    &_original {
+      max-width: 410px;
+
       &:hover {
         cursor: pointer;
+        background-color: #0000001a;
+      }
+    }
+
+    &_hex {
+      width: 140px;
+
+      &:hover {
+        cursor: pointer;
+        background-color: #0000001a;
       }
     }
   }

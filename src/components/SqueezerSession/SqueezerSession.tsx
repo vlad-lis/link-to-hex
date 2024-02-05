@@ -31,7 +31,7 @@ const SqueezerSession = (): ReactElement => {
       <h3 className={styles.session__title}>Current session:</h3>
       <div className={styles.session__subtitle}>
         <p className={styles.session__tip}>
-          (click a link cell to copy to clipboard)
+          (click a cell to copy link to clipboard)
         </p>
         <button
           className={styles.session__clear}
@@ -60,13 +60,13 @@ const SqueezerSession = (): ReactElement => {
                   {link.id}
                 </td>
                 <td
-                  className={`${styles.session__cell} ${styles.session__cell_link}`}
+                  className={`${styles.session__cell} ${styles.session__cell_original}`}
                   onClick={() => handleCopyOriginal(link.target)}
                 >
                   {link.target}
                 </td>
                 <td
-                  className={`${styles.session__cell} ${styles.session__cell_link}`}
+                  className={`${styles.session__cell} ${styles.session__cell_hex}`}
                   onClick={() => handleCopyHexed(link.short)}
                 >
                   {link.short}
