@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './HeaderNav.module.scss';
 import { RootState } from '../../store/store';
 import { setIsLoggedIn } from '../../store/authSlice';
+import { clearSqueezedLinks } from '../../store/squeezedLinksSlice';
 
 const HeaderNav = (): ReactElement => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const HeaderNav = (): ReactElement => {
   const handleLogout = (): void => {
     sessionStorage.removeItem('token');
     dispatch(setIsLoggedIn(false));
+    dispatch(clearSqueezedLinks());
     navigate('/signin', { replace: true });
   };
 
