@@ -24,6 +24,7 @@ const StatsTable = (): ReactElement => {
   const [paginationOffset, setPaginationOffset] = useState<number>(
     PAGINATION_OFFSET_INITIAL
   );
+  const [loadingError, setLoadingError] = useState<string>('');
 
   // load data
   useEffect(() => {
@@ -39,9 +40,9 @@ const StatsTable = (): ReactElement => {
           setApiData(result.data);
           setLinksTotal(result.total);
         } else if (result.statusCode) {
-          console.log(`Error ${result.statusCode}`);
+          setLoadingError(`Error fetching data: ${result.statusCode}`);
         } else {
-          console.log('Unknown error occurred');
+          setLoadingError('Something went wrong');
         }
       } finally {
         setIsFilterPanelOpen(false);
@@ -119,54 +120,59 @@ const StatsTable = (): ReactElement => {
           <div className={statsFiltersClass}>
             <StatsFilterForm />
           </div>
-          <table className={styles.stats__table}>
-            <thead>
-              <tr>
-                <th aria-hidden='true'>&nbsp;</th>
-                <th className={styles['stats__header-row']}>Original link</th>
-                <th
-                  className={`${styles['stats__header-row']} ${styles['stats__header-row_centered']}`}
-                >
-                  Hexed link
-                </th>
-                <th
-                  className={`${styles['stats__header-row']} ${styles['stats__header-row_centered']}`}
-                >
-                  Redirects
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {apiData.map((obj, index) => {
-                return (
-                  <tr className={styles.stats__row} key={obj.id}>
-                    <td
-                      className={`${styles.stats__cell} ${styles.stats__cell_centered}`}
-                    >
-                      {paginationOffset + index + 1}
-                    </td>
-                    <td
-                      className={`${styles.stats__cell} ${styles.stats__cell_original}`}
-                      onClick={() => handleCopyOriginal(obj.target)}
-                    >
-                      {obj.target}
-                    </td>
-                    <td
-                      className={`${styles.stats__cell} ${styles.stats__cell_centered} ${styles.stats__cell_hex}`}
-                      onClick={() => handleCopyHexed(obj.short)}
-                    >
-                      {obj.short}
-                    </td>
-                    <td
-                      className={`${styles.stats__cell} ${styles.stats__cell_centered}`}
-                    >
-                      {obj.counter}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+
+          {loadingError ? (
+            <p className={styles.stats__error}>{loadingError}</p>
+          ) : (
+            <table className={styles.stats__table}>
+              <thead>
+                <tr>
+                  <th aria-hidden='true'>&nbsp;</th>
+                  <th className={styles['stats__header-row']}>Original link</th>
+                  <th
+                    className={`${styles['stats__header-row']} ${styles['stats__header-row_centered']}`}
+                  >
+                    Hexed link
+                  </th>
+                  <th
+                    className={`${styles['stats__header-row']} ${styles['stats__header-row_centered']}`}
+                  >
+                    Redirects
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {apiData.map((obj, index) => {
+                  return (
+                    <tr className={styles.stats__row} key={obj.id}>
+                      <td
+                        className={`${styles.stats__cell} ${styles.stats__cell_centered}`}
+                      >
+                        {paginationOffset + index + 1}
+                      </td>
+                      <td
+                        className={`${styles.stats__cell} ${styles.stats__cell_original}`}
+                        onClick={() => handleCopyOriginal(obj.target)}
+                      >
+                        {obj.target}
+                      </td>
+                      <td
+                        className={`${styles.stats__cell} ${styles.stats__cell_centered} ${styles.stats__cell_hex}`}
+                        onClick={() => handleCopyHexed(obj.short)}
+                      >
+                        {obj.short}
+                      </td>
+                      <td
+                        className={`${styles.stats__cell} ${styles.stats__cell_centered}`}
+                      >
+                        {obj.counter}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          )}
         </>
       )}
     </section>
