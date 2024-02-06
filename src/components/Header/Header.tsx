@@ -6,11 +6,7 @@ const Header = (): ReactElement => {
   return (
     <header className={styles.header}>
       <div className={styles['header__logo-wrapper']}>
-        <img
-          src='images/logo.svg'
-          alt='link hexer'
-          className={styles.header__logo}
-        />
+        <div className={styles.header__logo} />
         <p className={styles['header__logo-title']}>Link Hexer</p>
       </div>
       <HeaderNav />

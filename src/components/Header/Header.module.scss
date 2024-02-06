@@ -16,6 +16,11 @@
 
   &__logo {
     height: 70px;
+    width: 70px;
+    background-image: url('../../../public/images/logo.svg');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
   }
 
   &__logo-title {

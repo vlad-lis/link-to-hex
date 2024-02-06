@@ -28,7 +28,7 @@ const StatsPagination = ({
         className={`${styles.pagination__btn} ${styles.pagination__btn_next}`}
         type='button'
         onClick={onNextPage}
-        disabled={currentPage === totalPages - 1}
+        disabled={currentPage === totalPages - 1 || totalPages === 0}
         aria-label='next-page'
       />
     </div>

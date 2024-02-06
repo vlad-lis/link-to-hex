@@ -92,88 +92,105 @@ const StatsTable = (): ReactElement => {
       {isLoading ? (
         <Loader />
       ) : (
-        <>
-          <h3 className={styles.stats__title}>Links created: {linksTotal}</h3>
-          <div className={styles['stats__controls-wrapper']}>
-            <p className={styles.stats__tip}>(click a cell to copy a link)</p>
-            <div className={styles.stats__controls}>
-              <button
-                className={`${styles.stats__btn} ${styles.stats__btn_filter}`}
-                type='button'
-                aria-label='filters'
-                onClick={handleFilterPanelToggle}
-              />
-              <button
-                className={`${styles.stats__btn} ${styles.stats__btn_refresh}`}
-                type='button'
-                aria-label='refresh'
-                onClick={handleRefreshClick}
-              />
-              <StatsPagination
-                currentPage={paginationOffset / PAGINATION_LIMIT}
-                totalPages={Math.ceil(linksTotal! / PAGINATION_LIMIT)}
-                onPrevPage={handlePrevPageClick}
-                onNextPage={handleNextPageClick}
-              />
-            </div>
-          </div>
-          <div className={statsFiltersClass}>
-            <StatsFilterForm />
-          </div>
+        (() => {
+          if (apiData.length === 0 && !loadingError) {
+            return (
+              <p className={styles.stats__prompt}>
+                Create some links first to see their stats
+              </p>
+            );
+          }
+          return (
+            <>
+              <h3 className={styles.stats__title}>
+                Links created: {linksTotal}
+              </h3>
+              <div className={styles['stats__controls-wrapper']}>
+                <p className={styles.stats__tip}>
+                  (click a cell to copy a link)
+                </p>
+                <div className={styles.stats__controls}>
+                  <button
+                    className={`${styles.stats__btn} ${styles.stats__btn_filter}`}
+                    type='button'
+                    aria-label='filters'
+                    onClick={handleFilterPanelToggle}
+                  />
+                  <button
+                    className={`${styles.stats__btn} ${styles.stats__btn_refresh}`}
+                    type='button'
+                    aria-label='refresh'
+                    onClick={handleRefreshClick}
+                  />
+                  <StatsPagination
+                    currentPage={paginationOffset / PAGINATION_LIMIT}
+                    totalPages={Math.ceil(linksTotal! / PAGINATION_LIMIT)}
+                    onPrevPage={handlePrevPageClick}
+                    onNextPage={handleNextPageClick}
+                  />
+                </div>
+              </div>
+              <div className={statsFiltersClass}>
+                <StatsFilterForm />
+              </div>
 
-          {loadingError ? (
-            <p className={styles.stats__error}>{loadingError}</p>
-          ) : (
-            <table className={styles.stats__table}>
-              <thead>
-                <tr>
-                  <th aria-hidden='true'>&nbsp;</th>
-                  <th className={styles['stats__header-row']}>Original link</th>
-                  <th
-                    className={`${styles['stats__header-row']} ${styles['stats__header-row_centered']}`}
-                  >
-                    Hexed link
-                  </th>
-                  <th
-                    className={`${styles['stats__header-row']} ${styles['stats__header-row_centered']}`}
-                  >
-                    Redirects
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {apiData.map((obj, index) => {
-                  return (
-                    <tr className={styles.stats__row} key={obj.id}>
-                      <td
-                        className={`${styles.stats__cell} ${styles.stats__cell_centered}`}
+              {loadingError && (
+                <p className={styles.stats__error}>{loadingError}</p>
+              )}
+
+              {apiData.length > 0 && (
+                <table className={styles.stats__table}>
+                  <thead>
+                    <tr>
+                      <th aria-hidden='true'>&nbsp;</th>
+                      <th className={styles['stats__header-row']}>
+                        Original link
+                      </th>
+                      <th
+                        className={`${styles['stats__header-row']} ${styles['stats__header-row_centered']}`}
                       >
-                        {paginationOffset + index + 1}
-                      </td>
-                      <td
-                        className={`${styles.stats__cell} ${styles.stats__cell_original}`}
-                        onClick={() => handleCopyOriginal(obj.target)}
+                        Hexed link
+                      </th>
+                      <th
+                        className={`${styles['stats__header-row']} ${styles['stats__header-row_centered']}`}
                       >
-                        {obj.target}
-                      </td>
-                      <td
-                        className={`${styles.stats__cell} ${styles.stats__cell_centered} ${styles.stats__cell_hex}`}
-                        onClick={() => handleCopyHexed(obj.short)}
-                      >
-                        {obj.short}
-                      </td>
-                      <td
-                        className={`${styles.stats__cell} ${styles.stats__cell_centered}`}
-                      >
-                        {obj.counter}
-                      </td>
+                        Redirects
+                      </th>
                     </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          )}
-        </>
+                  </thead>
+                  <tbody>
+                    {apiData.map((obj, index) => (
+                      <tr className={styles.stats__row} key={obj.id}>
+                        <td
+                          className={`${styles.stats__cell} ${styles.stats__cell_centered}`}
+                        >
+                          {paginationOffset + index + 1}
+                        </td>
+                        <td
+                          className={`${styles.stats__cell} ${styles.stats__cell_original}`}
+                          onClick={() => handleCopyOriginal(obj.target)}
+                        >
+                          {obj.target}
+                        </td>
+                        <td
+                          className={`${styles.stats__cell} ${styles.stats__cell_centered} ${styles.stats__cell_hex}`}
+                          onClick={() => handleCopyHexed(obj.short)}
+                        >
+                          {obj.short}
+                        </td>
+                        <td
+                          className={`${styles.stats__cell} ${styles.stats__cell_centered}`}
+                        >
+                          {obj.counter}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </>
+          );
+        })()
       )}
     </section>
   );

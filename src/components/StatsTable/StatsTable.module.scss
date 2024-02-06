@@ -66,6 +66,12 @@
     color: #bc2c2c;
   }
 
+  &__prompt {
+    margin: 40px 0 0 0;
+    font-size: 20px;
+    text-align: center;
+  }
+
   &__table {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
