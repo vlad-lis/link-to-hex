@@ -1,5 +1,9 @@
 .pagination {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   gap: 3px;
 
@@ -14,11 +18,11 @@
     background-size: contain;
 
     &_prev {
-      background-image: url('../../../public/images/prev.svg');
+      background-image: url("../../../public/images/prev.svg");
     }
 
     &_next {
-      background-image: url('../../../public/images/next.svg');
+      background-image: url("../../../public/images/next.svg");
     }
 
     &:hover {

@@ -14,11 +14,15 @@
   }
 
   &__input-wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     margin-top: 10px;
   }
 
   &__input {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
     flex: 1;
     height: 40px;
     font-size: 20px;
@@ -37,6 +41,8 @@
     border: 2px solid #000;
     border-left: none;
     background-color: #e9eef1;
+    -webkit-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
     transition: all 0.2s ease;
 
     &:hover {
@@ -85,13 +91,17 @@
   }
 
   &__redirect-wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
     gap: 12px;
   }
 
   &__copy {
-    background-image: url('../../../public/images/copy.svg');
+    background-image: url("../../../public/images/copy.svg");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -102,7 +112,7 @@
     width: 20px;
 
     &_success {
-      background-image: url('../../../public/images/copy_success.svg');
+      background-image: url("../../../public/images/copy_success.svg");
     }
 
     &:hover {

@@ -1,6 +1,13 @@
 .notfound {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   gap: 10px;
   max-width: 500px;
@@ -9,7 +16,7 @@
   &__logo {
     height: 50px;
     width: 50px;
-    background-image: url('../../../public/images/logo.svg');
+    background-image: url("../../../public/images/logo.svg");
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;

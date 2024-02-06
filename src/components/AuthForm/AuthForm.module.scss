@@ -1,11 +1,19 @@
 .form {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   gap: 15px;
   max-width: 450px;
   width: 100%;
   padding: 35px;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 
   &__fieldset {
@@ -13,7 +21,12 @@
     width: 100%;
     margin: 0;
     padding: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
     gap: 10px;
     border: none;
@@ -28,6 +41,7 @@
     padding: 0;
     text-indent: 15px;
     border: 2px solid #000;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
   }
 
@@ -40,7 +54,7 @@
     border: none;
     width: 24px;
     height: 24px;
-    background-image: url('../../../public/images/pw_show.svg');
+    background-image: url("../../../public/images/pw_show.svg");
     background-size: contain;
     background-color: transparent;
     opacity: 0.6;
@@ -49,7 +63,7 @@
     top: 21%;
 
     &_hide {
-      background-image: url('../../../public/images/pw_hide.svg');
+      background-image: url("../../../public/images/pw_hide.svg");
     }
 
     &:hover {
@@ -72,6 +86,8 @@
     border: 1px solid #000;
     border-radius: 7px;
     background-color: #e0e7eb;
+    -webkit-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
     transition: all 0.2s ease;
 
     &:hover {

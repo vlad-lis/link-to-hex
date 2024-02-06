@@ -1,13 +1,22 @@
 .form {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
   justify-content: flex-end;
   gap: 12px;
   font-size: 15px;
   min-height: 0;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 
   &__option-wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     gap: 4px;
   }
