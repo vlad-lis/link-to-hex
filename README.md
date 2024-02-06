@@ -1,46 +1,46 @@
-# Getting Started with Create React App
+# Link Hexer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Проект выложен по адресу https://vlad-lis.github.io/link-to-hex/
 
-## Available Scripts
+## Запуск проекта
 
-In the project directory, you can run:
+Если нужно, для basic authentification создать .env по шаблону .env.template:
 
-### `npm start`
+```
+BASIC_AUTH_USERNAME =
+BASIC_AUTH_PASSWORD =
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Локально:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. Клонировать репозиторий:
 
-### `npm test`
+```
+git clone git@github.com:vlad-lis/link-to-hex.git
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. Установить зависимости из корней папки:
 
-### `npm run build`
+```
+npm i
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. Запустить проект:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+npm run start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Локально через docker:
 
-### `npm run eject`
+1. Клонировать репозиторий:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```
+git clone git@github.com:vlad-lis/link-to-hex.git
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. В корневой папке запустить билд:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+docker-compose up --build
+```
