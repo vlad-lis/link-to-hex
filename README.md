@@ -21,7 +21,7 @@ BASIC_AUTH_PASSWORD =
 git clone git@github.com:vlad-lis/link-to-hex.git
 ```
 
-2. Установить зависимости из корней папки:
+2. Установить зависимости из корневой папки:
 
 ```
 npm i
