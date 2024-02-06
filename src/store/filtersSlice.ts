@@ -4,10 +4,8 @@ type TFiltersState = {
   filters: string[];
 };
 
-const storedFilters = JSON.parse(sessionStorage.getItem('filters') || '[]');
-const defaultFilters = ['desc_counter'];
 const initialState: TFiltersState = {
-  filters: storedFilters.length > 0 ? storedFilters : defaultFilters,
+  filters: [],
 };
 
 const filtersSlice = createSlice({
@@ -16,11 +14,9 @@ const filtersSlice = createSlice({
   reducers: {
     updateFilters: (state, action: PayloadAction<string[]>) => {
       state.filters = action.payload;
-      sessionStorage.setItem('filters', JSON.stringify(state.filters));
     },
     clearFilters: (state) => {
       state.filters = [];
-      sessionStorage.removeItem('filters');
     },
   },
 });

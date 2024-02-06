@@ -1,13 +1,15 @@
-import { ReactElement, useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { ReactElement, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { TStatsObject, getStats } from '../../utils/mainApi';
 import Loader from '../Loader/Loader';
 import styles from './StatsTable.module.scss';
 import copyToClipboard from '../../utils/helpers';
 import StatsFilterForm from '../StatsFilterForm/StatsFilterForm';
 import { RootState } from '../../store/store';
+import { clearFilters } from '../../store/filtersSlice';
 
 const StatsTable = (): ReactElement => {
+  const dispatch = useDispatch();
   const filters = useSelector((state: RootState) => state.filters.filters);
   const [apiData, setApiData] = useState<TStatsObject[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -15,9 +17,12 @@ const StatsTable = (): ReactElement => {
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState<boolean>(false);
   const statsFiltersClass = `${styles.stats__filters} ${isFilterPanelOpen ? styles.stats__filters_expanded : ''}`;
 
-  // api request
-  const getApiStats = useCallback(
-    async (offset: string, limit: string): Promise<void> => {
+  // load data
+  useEffect(() => {
+    const getApiStats = async (
+      offset: string,
+      limit: string
+    ): Promise<void> => {
       setIsLoading(true);
       try {
         const result = await getStats(offset, limit, filters);
@@ -34,14 +39,9 @@ const StatsTable = (): ReactElement => {
         setIsFilterPanelOpen(false);
         setIsLoading(false);
       }
-    },
-    [filters]
-  );
-
-  // load initial data
-  useEffect(() => {
+    };
     getApiStats('0', '10');
-  }, [getApiStats]);
+  }, [filters]);
 
   // copy original link
   const handleCopyOriginal = async (link: string): Promise<void> => {
@@ -60,7 +60,8 @@ const StatsTable = (): ReactElement => {
 
   // refresh click
   const handleRefreshClick = (): void => {
-    getApiStats('0', '10');
+    dispatch(clearFilters());
+    // updateApiData('0', '10');
   };
 
   return (

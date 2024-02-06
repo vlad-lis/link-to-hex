@@ -49,7 +49,7 @@ export const squeezeLink = async (link: string): Promise<TSqueezeResult> => {
 export const getStats = async (
   offset: string = '0',
   limit: string = '10',
-  order: string[] = ['desc_counter']
+  order: string[] = []
 ): Promise<TStatsResult> => {
   try {
     const token = sessionStorage.getItem('token');
