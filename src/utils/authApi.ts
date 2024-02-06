@@ -1,9 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import {
-  BASE_URL,
-  BASIC_AUTH_USERNAME,
-  BASIC_AUTH_PASSWORD,
-} from './constants';
+import { BASE_URL } from './constants';
 
 export type TAuthResult = {
   success: boolean;
@@ -11,7 +7,9 @@ export type TAuthResult = {
   token?: string;
 };
 
-const authHeader: string = `Basic ${btoa(`${BASIC_AUTH_USERNAME}:${BASIC_AUTH_PASSWORD}`)}`;
+const basicAuthUsername = process.env.BASIC_AUTH_USERNAME;
+const basicAuthPassword = process.env.BASIC_AUTH_PASSWORD;
+const authHeader: string = `Basic ${btoa(`${basicAuthUsername}:${basicAuthPassword}`)}`;
 
 // register
 export const signUp = async (
