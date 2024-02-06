@@ -25,7 +25,6 @@ const StatsFilterForm = (): ReactElement => {
       (value) => value !== 'none'
     );
     dispath(updateFilters(formDataArray));
-    console.log('APPLY CALLED');
   };
 
   return (
