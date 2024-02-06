@@ -1,6 +1,6 @@
 # Link Hexer
 
-Проект выложен по адресу https://vlad-lis.github.io/link-to-hex/
+Проект выложен по адресу: https://vlad-lis.github.io/link-to-hex/
 
 ## Запуск проекта
 
