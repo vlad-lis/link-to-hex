@@ -2,6 +2,8 @@
 
 Проект выложен по адресу: https://vlad-lis.github.io/link-to-hex/
 
+Для деплоя на gh-pages вместо BrowserRouter использован HashRouter.
+
 ## Запуск проекта
 
 Для basic authentification создать .env по шаблону .env.template:
