@@ -49,6 +49,19 @@
       "last 1 safari version"
     ]
   },
+  "prettier": {
+    "overrides": [
+      {
+        "files": "*.{js,jsx,ts,tsx}",
+        "options": {
+          "endOfLine": "auto",
+          "singleQuote": true,
+          "jsxSingleQuote": true,
+          "trailingComma": "es5"
+        }
+      }
+    ]
+  },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "eslint": "^8.56.0",
