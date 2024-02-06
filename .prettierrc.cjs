@@ -4,6 +4,7 @@ const config = {
   semi: true,
   singleQuote: true,
   jsxSingleQuote: true,
+  endOfLine: "auto",
 };
 
 module.exports = config;
