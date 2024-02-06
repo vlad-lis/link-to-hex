@@ -11,7 +11,8 @@ type TFormData = {
 
 const Squeezer = (): ReactElement => {
   const dispatch = useDispatch();
-  const linkRegex: RegExp = /^(https?:\/\/)/;
+  const linkRegex: RegExp =
+    /^(https?:\/\/)(www\.)?([a-zA-Z0-9-]+\.){1,}[a-zA-Z]{2,}/;
   const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [formData, setFormData] = useState<TFormData>({
