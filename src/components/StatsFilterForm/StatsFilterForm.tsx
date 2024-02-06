@@ -1,8 +1,10 @@
 import { ReactElement } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './StatsFilterForm.module.scss';
 import { updateFilters } from '../../store/filtersSlice';
+import { RootState } from '../../store/store';
+import { lastSelectedOption } from '../../utils/helpers';
 
 enum FilterEnum {
   desc = 'desc',
@@ -18,6 +20,7 @@ type TFormInput = {
 
 const StatsFilterForm = (): ReactElement => {
   const dispath = useDispatch();
+  const filters = useSelector((state: RootState) => state.filters.filters);
   const { register, handleSubmit } = useForm<TFormInput>();
 
   const handleFormSubmit: SubmitHandler<TFormInput> = async (data) => {
@@ -35,6 +38,7 @@ const StatsFilterForm = (): ReactElement => {
           className={styles.form__select}
           {...register('original')}
           id='original-link'
+          defaultValue={lastSelectedOption(filters, 'target')}
         >
           <option value='none'>None</option>
           <option value='desc_target'>Descending</option>
@@ -47,6 +51,7 @@ const StatsFilterForm = (): ReactElement => {
           className={styles.form__select}
           {...register('hex')}
           id='hexed-link'
+          defaultValue={lastSelectedOption(filters, 'short')}
         >
           <option value='none'>None</option>
           <option value='desc_short'>Descending</option>
@@ -59,6 +64,7 @@ const StatsFilterForm = (): ReactElement => {
           className={styles.form__select}
           {...register('redirects')}
           id='redirects'
+          defaultValue={lastSelectedOption(filters, 'counter')}
         >
           <option value='none'>None</option>
           <option value='desc_counter'>High to low</option>

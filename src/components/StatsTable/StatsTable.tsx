@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TStatsObject, getStats } from '../../utils/mainApi';
 import Loader from '../Loader/Loader';
 import styles from './StatsTable.module.scss';
-import copyToClipboard from '../../utils/helpers';
+import { copyToClipboard } from '../../utils/helpers';
 import StatsFilterForm from '../StatsFilterForm/StatsFilterForm';
 import { RootState } from '../../store/store';
 import { clearFilters } from '../../store/filtersSlice';
@@ -61,7 +61,6 @@ const StatsTable = (): ReactElement => {
   // refresh click
   const handleRefreshClick = (): void => {
     dispatch(clearFilters());
-    // updateApiData('0', '10');
   };
 
   return (

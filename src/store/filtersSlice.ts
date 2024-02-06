@@ -5,7 +5,7 @@ type TFiltersState = {
 };
 
 const initialState: TFiltersState = {
-  filters: [],
+  filters: ['desc_counter'],
 };
 
 const filtersSlice = createSlice({

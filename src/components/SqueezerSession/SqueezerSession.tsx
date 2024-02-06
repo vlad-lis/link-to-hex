@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './SqueezerSession.module.scss';
 import { RootState } from '../../store/store';
-import copyToClipboard from '../../utils/helpers';
+import { copyToClipboard } from '../../utils/helpers';
 import { clearSqueezedLinks } from '../../store/squeezedLinksSlice';
 
 const SqueezerSession = (): ReactElement => {

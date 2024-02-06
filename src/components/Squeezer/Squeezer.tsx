@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import styles from './Squeezer.module.scss';
 import { squeezeLink } from '../../utils/mainApi';
 import { addSqueezedLink } from '../../store/squeezedLinksSlice';
-import copyToClipboard from '../../utils/helpers';
+import { copyToClipboard } from '../../utils/helpers';
 
 type TFormData = {
   link: string;
