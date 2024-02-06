@@ -51,7 +51,7 @@
     overflow: hidden;
     display: grid;
     grid-template-rows: 0fr;
-    transition: all 0.1s ease;
+    transition: all 0.2s ease;
 
     &_expanded {
       grid-template-rows: 1fr;

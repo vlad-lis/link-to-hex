@@ -7,6 +7,11 @@ import { copyToClipboard } from '../../utils/helpers';
 import StatsFilterForm from '../StatsFilterForm/StatsFilterForm';
 import { RootState } from '../../store/store';
 import { clearFilters } from '../../store/filtersSlice';
+import {
+  PAGINATION_OFFSET_INITIAL,
+  PAGINATION_LIMIT,
+} from '../../utils/constants';
+import StatsPagination from '../StatsPagination/StatsPagination';
 
 const StatsTable = (): ReactElement => {
   const dispatch = useDispatch();
@@ -16,12 +21,15 @@ const StatsTable = (): ReactElement => {
   const [linksTotal, setLinksTotal] = useState<number | undefined>(0);
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState<boolean>(false);
   const statsFiltersClass = `${styles.stats__filters} ${isFilterPanelOpen ? styles.stats__filters_expanded : ''}`;
+  const [paginationOffset, setPaginationOffset] = useState<number>(
+    PAGINATION_OFFSET_INITIAL
+  );
 
   // load data
   useEffect(() => {
     const getApiStats = async (
-      offset: string,
-      limit: string
+      offset: number,
+      limit: number
     ): Promise<void> => {
       setIsLoading(true);
       try {
@@ -40,8 +48,9 @@ const StatsTable = (): ReactElement => {
         setIsLoading(false);
       }
     };
-    getApiStats('0', '10');
-  }, [filters]);
+
+    getApiStats(paginationOffset, PAGINATION_LIMIT);
+  }, [filters, paginationOffset]);
 
   // copy original link
   const handleCopyOriginal = async (link: string): Promise<void> => {
@@ -61,6 +70,20 @@ const StatsTable = (): ReactElement => {
   // refresh click
   const handleRefreshClick = (): void => {
     dispatch(clearFilters());
+    setPaginationOffset(PAGINATION_OFFSET_INITIAL);
+  };
+
+  // previous page
+  const handlePrevPageClick = (): void => {
+    if (paginationOffset > 0) {
+      setPaginationOffset(paginationOffset - PAGINATION_LIMIT);
+    }
+  };
+
+  const handleNextPageClick = (): void => {
+    if (paginationOffset + PAGINATION_LIMIT < linksTotal!) {
+      setPaginationOffset(paginationOffset + PAGINATION_LIMIT);
+    }
   };
 
   return (
@@ -114,7 +137,7 @@ const StatsTable = (): ReactElement => {
                     <td
                       className={`${styles.stats__cell} ${styles.stats__cell_centered}`}
                     >
-                      {index + 1}
+                      {paginationOffset + index + 1}
                     </td>
                     <td
                       className={`${styles.stats__cell} ${styles.stats__cell_original}`}
@@ -138,6 +161,12 @@ const StatsTable = (): ReactElement => {
               })}
             </tbody>
           </table>
+          <StatsPagination
+            currentPage={paginationOffset / PAGINATION_LIMIT}
+            totalPages={Math.ceil(linksTotal! / PAGINATION_LIMIT)}
+            onPrevPage={handlePrevPageClick}
+            onNextPage={handleNextPageClick}
+          />
         </>
       )}
     </section>

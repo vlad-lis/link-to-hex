@@ -1,5 +1,9 @@
 import axios, { AxiosError } from 'axios';
-import { BASE_URL } from './constants';
+import {
+  BASE_URL,
+  PAGINATION_OFFSET_INITIAL,
+  PAGINATION_LIMIT,
+} from './constants';
 
 type TSqueezeResult = {
   success: boolean;
@@ -47,8 +51,8 @@ export const squeezeLink = async (link: string): Promise<TSqueezeResult> => {
 
 // get stats
 export const getStats = async (
-  offset: string = '0',
-  limit: string = '10',
+  offset: number = PAGINATION_OFFSET_INITIAL,
+  limit: number = PAGINATION_LIMIT,
   order: string[] = []
 ): Promise<TStatsResult> => {
   try {
@@ -63,7 +67,11 @@ export const getStats = async (
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      params: { offset, limit, order: orderParams },
+      params: {
+        offset: offset.toString(),
+        limit: limit.toString(),
+        order: orderParams,
+      },
     });
 
     return {
