@@ -4,6 +4,7 @@ import AuthPage from '../../pages/AuthPage/AuthPage';
 import SqueezePage from '../../pages/SqueezePage/SqueezePage';
 import StatsPage from '../../pages/StatsPage/StatsPage';
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
+import NotFound from '../../pages/NotFound/NotFound';
 
 const RoutesComponent = (): ReactElement => {
   return (
@@ -18,6 +19,7 @@ const RoutesComponent = (): ReactElement => {
         path='/'
         element={<ProtectedRouteElement element={<StatsPage />} />}
       />
+      <Route path='*' element={<NotFound />} />
     </Routes>
   );
 };
