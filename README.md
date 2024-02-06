@@ -4,7 +4,7 @@
 
 ## Запуск проекта
 
-Если нужно, для basic authentification создать .env по шаблону .env.template:
+Для basic authentification создать .env по шаблону .env.template:
 
 ```
 BASIC_AUTH_USERNAME =
