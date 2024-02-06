@@ -34,7 +34,7 @@ const StatsTable = (): ReactElement => {
     ): Promise<void> => {
       setIsLoading(true);
       try {
-        const result = await getStats(offset, limit, filters);
+        const result = await getStats(filters, offset, limit);
 
         if (result.success && result.data) {
           setApiData(result.data);

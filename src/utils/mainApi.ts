@@ -51,26 +51,24 @@ export const squeezeLink = async (link: string): Promise<TSqueezeResult> => {
 
 // get stats
 export const getStats = async (
+  order: string[] = [],
   offset: number = PAGINATION_OFFSET_INITIAL,
-  limit: number = PAGINATION_LIMIT,
-  order: string[] = []
+  limit: number = PAGINATION_LIMIT
 ): Promise<TStatsResult> => {
   try {
     const token = sessionStorage.getItem('token');
-
-    let orderParams;
-    if (order && order.length > 0) {
-      orderParams = order.length === 1 ? order[0] : order;
-    }
 
     const response = await axios.get(`${BASE_URL}/statistics`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
       params: {
+        order,
         offset: offset.toString(),
         limit: limit.toString(),
-        order: orderParams,
+      },
+      paramsSerializer: {
+        indexes: null,
       },
     });
 
