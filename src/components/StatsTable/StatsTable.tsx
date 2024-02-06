@@ -108,6 +108,12 @@ const StatsTable = (): ReactElement => {
                 aria-label='refresh'
                 onClick={handleRefreshClick}
               />
+              <StatsPagination
+                currentPage={paginationOffset / PAGINATION_LIMIT}
+                totalPages={Math.ceil(linksTotal! / PAGINATION_LIMIT)}
+                onPrevPage={handlePrevPageClick}
+                onNextPage={handleNextPageClick}
+              />
             </div>
           </div>
           <div className={statsFiltersClass}>
@@ -161,12 +167,6 @@ const StatsTable = (): ReactElement => {
               })}
             </tbody>
           </table>
-          <StatsPagination
-            currentPage={paginationOffset / PAGINATION_LIMIT}
-            totalPages={Math.ceil(linksTotal! / PAGINATION_LIMIT)}
-            onPrevPage={handlePrevPageClick}
-            onNextPage={handleNextPageClick}
-          />
         </>
       )}
     </section>

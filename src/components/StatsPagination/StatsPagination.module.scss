@@ -1,0 +1,37 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+
+  &__btn {
+    width: 30px;
+    height: 30px;
+    border: none;
+    padding: 0;
+    background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    &_prev {
+      background-image: url('../../../public/images/prev.svg');
+    }
+
+    &_next {
+      background-image: url('../../../public/images/next.svg');
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:disabled {
+      opacity: 0.3;
+      cursor: auto;
+    }
+  }
+
+  &__page {
+    margin: 0;
+  }
+}

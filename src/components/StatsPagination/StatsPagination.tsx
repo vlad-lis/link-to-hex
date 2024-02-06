@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+import styles from './StatsPagination.module.scss';
 
 type TStatsPaginationProps = {
   currentPage: number;
@@ -14,18 +15,22 @@ const StatsPagination = ({
   onNextPage,
 }: TStatsPaginationProps): ReactElement => {
   return (
-    <div>
-      <button type='button' onClick={onPrevPage} disabled={currentPage === 0}>
-        &lt;
-      </button>
-      <p>{currentPage + 1}</p>
+    <div className={styles.pagination}>
       <button
+        className={`${styles.pagination__btn} ${styles.pagination__btn_prev}`}
+        type='button'
+        onClick={onPrevPage}
+        disabled={currentPage === 0}
+        aria-label='prev-page'
+      />
+      <p className={styles.pagination__page}>{currentPage + 1}</p>
+      <button
+        className={`${styles.pagination__btn} ${styles.pagination__btn_next}`}
         type='button'
         onClick={onNextPage}
         disabled={currentPage === totalPages - 1}
-      >
-        &gt;
-      </button>
+        aria-label='next-page'
+      />
     </div>
   );
 };
