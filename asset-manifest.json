@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/link-to-hex/static/css/main.14c59ba2.css",
+    "main.css": "/link-to-hex/static/css/main.ffeaa6f9.css",
     "main.js": "/link-to-hex/static/js/main.53d259a5.js",
     "static/media/Roboto-Regular.ttf": "/link-to-hex/static/media/Roboto-Regular.fc2b5060f7accec5cf74.ttf",
     "static/media/Roboto-Bold.ttf": "/link-to-hex/static/media/Roboto-Bold.f80816a5455d171f948d.ttf",
@@ -14,11 +14,11 @@
     "static/media/refresh.svg": "/link-to-hex/static/media/refresh.e6807c352b546ab90a1a.svg",
     "static/media/prev.svg": "/link-to-hex/static/media/prev.d59f1eafa4b4521b9e28.svg",
     "static/media/next.svg": "/link-to-hex/static/media/next.610fcc4eacf394dd5f39.svg",
-    "main.14c59ba2.css.map": "/link-to-hex/static/css/main.14c59ba2.css.map",
+    "main.ffeaa6f9.css.map": "/link-to-hex/static/css/main.ffeaa6f9.css.map",
     "main.53d259a5.js.map": "/link-to-hex/static/js/main.53d259a5.js.map"
   },
   "entrypoints": [
-    "static/css/main.14c59ba2.css",
+    "static/css/main.ffeaa6f9.css",
     "static/js/main.53d259a5.js"
   ]
 }
